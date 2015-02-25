@@ -1,0 +1,176 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\title{Data Mining Assignment 1}
+\author{Yulong Yang\\ netid: \textit{yy231}} % Your name
+
+
+\date{\normalsize\today} % Today's date or a custom date
+\begin{document}
+
+\maketitle % Print the title
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 1 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 1}
+
+\begin{enumerate}
+\item Speed of a vehicle measured in mph.
+
+Continuous, quantitative, ratio. 
+
+\item Altitude of a region.
+
+Continuous, quantitative, ratio. As it is meaningful to say the altitude of one region is twice as high as that of another.
+
+\item Intensity of rain as indicated using the values: no rain, intermittent rain, incessant rain. 
+
+Discrete, qualitative, ordinal. It is ordinal because values are in an order defined by the intensity of the rain.
+
+\item Brightness as measured by a light meter.
+
+Continuous, quantitative, ratio. I choose ratio based the assumption that the measure starts from zero, which means completely dark, and to some finite value, which means the brightest possible. In such assumption, brightness measure is similar to that of the speed of a vehicle. 
+
+\item Barcode number printed on each item in a supermarket.
+
+Discrete, qualitative, nominal. As we do not have any preserved ordering among those barcodes.
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 2 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 2}
+
+A good method would be stratified sampling, that is to make the sampling proportional to the size of each subpopulation. In this case, we will randomly sample 25 from Asian subpopulation, 50 and 25 from Hispanic and Native American subpopulation, respectively.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 3 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 3}
+
+\subsection*{3.1} Yes the J coefficient is always greater than cosine similarity for two binary strings. By definition, J is calculated as:
+
+\begin{equation} \label{eq:solve}
+J(s1, s2) = \frac{F11}{F01+F10+F11} 				
+\end{equation}
+
+And cosine similarity is calculated as:
+
+\begin{equation} 
+cos(s1, s2) = \frac{s1 \cdot s2}{||s1|| ||s2||}
+\end{equation}
+
+And we would like to show that for any two binary strings $s1$ and $s2$,
+
+\begin{equation}~\label{eq:3}
+\frac{F11}{F01+F10+F11} \geq \frac{s1 \cdot s2}{||s1|| ||s2||}
+\end{equation}
+
+We observe that for string s1 and s2, $F11$ is equivalent to $s1 \cdot s2$. Furthermore, we have $F10 + F11 = ||s1||$ and $F01 + F11 = ||s2||$. Then the equation~\ref{eq:3} reduced to: 
+
+\begin{equation}~\label{eq:4}
+||s1|| + ||s2|| - s1 \cdot s2 \leq ||s1|| ||s2||
+\end{equation}
+
+Since both $||s1||$ and $||s2||$ are at least 1, therefore $||s1|| ||s2|| \geq ||s1|| ||s2||$. Consequently, the equation~\ref{eq:4} stands. Thus, the claim is correct.
+
+
+\subsection*{3.2} Yes. An example could be two binary strings, where values of two vectors could only be either 0 or 1.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 4 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 4}
+
+Yes, if $S(G_1, G_2)=1$, then two graphs are equivalent. We justify this with a disproof. 
+
+Suppose we have two different graphs whose similar score is 1. Assume $|G_1| \geq |G_2|$, then,
+
+\begin{equation}~\label{eq:4-1}
+\exists i, \text{s.t. } deg(v_{1i}) \geq deg(v_{2i}), v_{1i} \in G_1, v_{2i} \in G_2
+\end{equation}
+
+We let both graphs have 3 vertices, and the second vertex matches the equation~\ref{eq:4-1}. In such case, the similarity score calculation would be:
+
+\begin{equation}~\label{eq:4-2}
+S(G_1, G_2) = \frac{deg(v_{11}) + deg(v_{22}) + deg(v_{13})}{2 \times |G_1|}, v_{1i} \in G_1, v_{2i} \in G_2
+\end{equation}
+
+In order for equation~\ref{eq:4-2} to be 1, $deg(v_{22}) = deg(v_{12})$ has to be true. Also, $deg(v_{13})=deg(v_{23})$ has to be true, otherwise the denominator of equation~\ref{eq:4-2} will change to $|G_2|$. The same logic applies to $deg(v_{11})$.
+
+Therefore, the claim is true.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 5 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 5}
+
+\subsection*{5.1}
+
+Hamming distance is preferred. As we have potentially hundreds of thousands of transactions, most of items would not have same transaction IDs in their sets. In such case, only Hamming distance could spot the difference, while Jaccard can't. Take an example:
+
+\begin{align}
+s1=01000001\\
+s2=00010100
+\end{align}
+
+In this case, $H=4$, while $J=0$. Another example of items with no exact IDs:
+
+\begin{align}
+s1=00000001\\
+s2=00000000
+\end{align}
+
+For this pair, $H=1$, while $J=0$. We could see that Jaccard coefficient cannot differentiate the two pairs, while in fact those two pair are different. We could say the second pair are more similar with each other than the first pair, as they disappear from most of transactions together. Meanwhile, Hamming distance spots such difference in proximity of pairs.
+
+\subsection*{5.2}
+
+Jaccard coefficient is preferred in this case. As now we are analyzing only pairs that are often bought together, which means most of the pairs will contain a lot of ``11", i.e. when two items of the pair appear in one transaction together. Take an example:
+
+\begin{align}
+s1=1111111100\\
+s2=1111111101
+\end{align}
+
+Each item has 10 IDs, and both of two items appear in the same eight transactions. For this pair, $H=1$, and $J=8/9$. Another example:
+
+\begin{align}
+s1=1111111110\\
+s2=1111111111
+\end{align}
+
+Two items appear in 9 out of 10 transactions together except one. For this pair, $H=1$, and $J=9/10$. As this pair appears in one more transaction together compared with the previous example. Jaccard coefficient successfully spot this different in proximity and score higher for this pair, while Hamming distance computes the same result for two pairs.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 6 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 6}
+
+\paragraph{1.Classification} What kind of illness the patient has?
+\begin{description}
+\item[Row] A patient
+\item[Column] His/her measures like temperature, blood pressure, etc, and a class attribute that indicates what kind of diagnosis this patient receives.
+\end{description}
+
+\paragraph{2.Clustering} What kind of patterns of blood pressure patients with different illness have?
+\begin{description}
+\item[Row] A patient
+\item[Column] His/her measures like temperature, blood pressure, etc.
+\end{description}
+
+\paragraph{3.Association rule mining} What kind of health measures indicate a certain type of illness? For example, a fever often associates with high temperature.
+\begin{description}
+\item[Row] A patient
+\item[Column] His/her measures like temperature, blood pressure, etc, and a class attribute that indicates what kind of diagnosis this patient receives.
+\end{description}
+
+\paragraph{4.Anomaly detection} Is patient healthy, or being sick? To spot unhealthy patient based on their abnormal measures.
+\begin{description}
+\item[Row] A patient
+\item[Column] His/her measures like temperature, blood pressure, etc.
+\end{description}
+
+\end{document}
