@@ -1,0 +1,107 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\title{Data Mining Assignment 2}
+\author{Yulong Yang\\ netid: \textit{yy231}} % Your name
+
+
+\date{\normalsize\today} % Today's date or a custom date
+\begin{document}
+
+\maketitle % Print the title
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 1 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 1 Entropy}
+
+\subsection*{1.a} entropy = 1.00
+\subsection*{1.b} entropy = 4.32
+\subsection*{1.c} entropy = 0.97
+\subsection*{1.d} entropy = 1.52
+\subsection*{1.e} Movie Format has the lower entropy.
+\subsection*{1.f} First of all, ID is not a valid attribute for split because it is unique across every data point. Then, we compute the information gain of splitting by the other two attributes:
+
+\begin{table}[htdp]
+\caption{Information Gain}
+\begin{center}
+\begin{tabular}{| l | l |} \hline
+Movie Format & 0.1245 \\ \hline
+Movie Category & 0.2958 \\ \hline
+\end{tabular}
+\end{center}
+\label{t1}
+\end{table}%
+
+We choose Movie Category as the splitting attribute because it has the higher info gain.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 2 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 2 Error}
+
+\subsection*{a}
+
+The optimistic estimate is the training error, which in this case is 0. The pessimistic estimate is the training error + penalty for model complexity, in this case is:
+
+\begin{equation} \label{eq:solve}
+e(T) = \frac{0 + 6 \times 2}{15} = .8			
+\end{equation}
+
+\subsection*{b}
+
+The testing error is 
+
+\begin{equation} \label{eq:2b}
+e(T) = \frac{3}{15} = .2
+\end{equation}
+
+\subsection*{c}
+
+While the optimistic estimate of error is low, the pessimistic one is high. This is due the fact that the model is considered as complex. As it is complex, it is possible that it overfits the training dataset. Consequently, the testing error rate is higher than the optimistic estimate.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 3 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 3 Decision tree and kNN}
+
+For decision tree on dataset 1, if we could build the tree based on discriminating attributes, then the tree model will work out well because the discriminating attributes are very different for the two classes. Otherwise decision tree will not work. 
+
+For dataset 2, we could build the decision tree such that the splitting nodes are defined precisely for the edge of the two ellipsoids. In such way, it will work well. However, it is possible to runs into overfitting problem because it is too precise.
+
+As for kNN, the dataset 1 again if the model could calculate the distance based on discriminating attributes then it will work well. 
+
+For dataset 2, the choice of k will greatly affect the result. It is very tricky to pick up a k to ensure the model to work well for different data points. Therefore the model will not be so good.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 4 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 4 Rule-based classifier}
+
+\subsection*{a}
+
+No, because some records are covered by more than one rule, such as Marital Status.
+
+\subsection*{b}
+
+No, because there are some combinations of attributes are not covered by the rule set. For example, a record with Home Owner=No, Marital Status=Divorced, Annual Income=High, Currently Employed=Yes.
+
+\subsection*{c}
+
+Yes the order is needed to ensure the classification is consistent because our rules are not mutually exclusive. For example, the ordering of second and the last two rules will affect the result.
+
+\subsection*{d}
+
+Yes because our rules are not exhaustive, some records may not trigger any rules.
+
+%%%%%%%%%%%%%%%%
+%%%%% Question 5 %%%%%
+%%%%%%%%%%%%%%%%
+\section*{Question 5 RIPPER and kNN}
+
+I argue that RIPPER will perform better. In real cases, a film having massive production, great director or many world-class stars indicate a high probability of success. This matches the process of rule-based classifier.
+
+On the other hand, it will be very difficult to even train the model of kNN. Distance calculation is hard to be defined for some attributes, such as Director, Language. Also, different combinations of values might result in different results. Maybe some directors are good at shorter film, while are bad at longer films, and other directors are the opposite. This increases the difficulty of model training even more. Therefore, kNN may not work well on such dataset.
+
+\end{document}
